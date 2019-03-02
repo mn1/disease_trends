@@ -1,28 +1,21 @@
 <html>
 <body>
-    <h1>The response</h1>
+    <h1>Disease trend for <em>{{ name }}</em></h1>
 
 <p>
-The selected disease was: <em>{{ name }}</em>
-</p>
-
-<p>
-The search will be from the year <em>{{ start_year }}</em> until <em>{{ end_year }}</em>.
-</p>
-
-<p>
-    The urls that will be queried are:
+    From the year <em>{{ start_year }}</em> until <em>{{ end_year }}</em> the number of publications mentioning it were:
 </p>
 
 <ul>
-{% for generated_url in urls %}
-    <li>{{ generated_url }}</li>
+{% for year, count in counts.items %}
+    <li>{{ year }}: {{ count }}</li>
 {% endfor %}
 </ul>
 
 
 <script src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/Chart.bundle.js"></script>
-<canvas id="myChart" width="80%"></canvas>
+
+<canvas id="myChart" width="200px"></canvas>
 
 <script>
 var ctx = document.getElementById("myChart").getContext('2d');
@@ -30,13 +23,17 @@ var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: [
-            "2005",
-            "2006",
-            "2007",
+            {% for year, count in counts.items %}
+            "{{ count }}",
+            {% endfor %}
         ],
         datasets: [{
             label: '# of papers',
-            data: [12, 19, 3,],
+            data: [
+                {% for year, count in counts.items %}
+                "{{ count }}",
+                {% endfor %}
+            ],
             backgroundColor: 
                 'rgba(54, 162, 235, 0.2)',
             
