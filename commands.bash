@@ -34,3 +34,14 @@ export PYTHONPATH=./modules
 
 python -m unittest discover test/
 
+python mysite/manage.py test polls
+
+
+
+# Starting the disease trends app
+
+django-admin startproject disease_trends
+#python manage.py startapp disease_trends
+
+
+
