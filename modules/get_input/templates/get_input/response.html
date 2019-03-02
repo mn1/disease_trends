@@ -1,21 +1,56 @@
 <html>
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/datatables.css"/>
+
+    <script src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/Chart.bundle.js"></script>
+    <script src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/utils.js"></script>
+    <script type="text/javascript" language="javascript" src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/datatables.js"></script>
+
+</head>
 <body>
-    <h1>Disease trend for <em>{{ name }}</em></h1>
+
+<h1>Disease trend for <em>{{ name }}</em></h1>
 
 <p>
     From the year <em>{{ start_year }}</em> until <em>{{ end_year }}</em> the number of publications mentioning it were:
 </p>
 
-<ul>
-{% for year, count in counts.items %}
-    <li>{{ year }}: {{ count }}</li>
+
+<div style="width: 80%;">
+<canvas id="myChart"></canvas>
+</div>
+
+<h3>Summary</h3>
+
+<script type="text/javascript" class="init">
+$(document).ready(function() {
+    $('#overview_table').DataTable();
+} );
+</script>
+
+<table id="overview_table" class="display" cellspacing="0">
+<thead>
+    <tr>
+        <th>Year</th>
+        <th>Number of papers</th>
+    </tr>
+</thead>
+
+<tbody>
+
+{% for year in years_sorted %}
+
+<tr>
+    <td>{{ year }}</td>
+    <td align="right">{{ counts|get_item:year }}</td>
+</tr>
+
 {% endfor %}
-</ul>
 
-
-<script src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/Chart.bundle.js"></script>
-
-<canvas id="myChart" width="200px"></canvas>
+</tbody>
+</table>
 
 <script>
 var ctx = document.getElementById("myChart").getContext('2d');
@@ -23,15 +58,15 @@ var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: [
-            {% for year, count in counts.items %}
-            "{{ count }}",
+            {% for year in years_sorted %}
+            "{{ year }}",
             {% endfor %}
         ],
         datasets: [{
             label: '# of papers',
             data: [
-                {% for year, count in counts.items %}
-                "{{ count }}",
+                {% for year in years_sorted %}
+                "{{ counts|get_item:year }}",
                 {% endfor %}
             ],
             backgroundColor: 
@@ -44,6 +79,24 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
+    
+        responsive: true,
+        legend: {
+            display: true,
+            position: 'bottom',
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    min: 0
+                }
+            }]
+        },
+        title: {
+            display: false,
+            text: 'Total numbers by feature type'
+        },
+    
         scales: {
             yAxes: [{
                 ticks: {
