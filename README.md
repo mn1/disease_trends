@@ -8,22 +8,39 @@ Choose the directory to which this will be installed:
 
 ### Dependencies
 
+## Python 3.4
+
+This may work with other Python3 version, but I have only tested it with Python 3.4
+
+    sudo yum update
+    sudo yum install python34
+    sudo yum install git
+
+## Libraries
+
+Libraries are installed in a virtual environment
+
     pip install virtualenv
-
-## Create a virtual environment
-
     virtualenv -p python3 $INSTALL_DIR/virtualenv
+
+Activate it:
+
     source $INSTALL_DIR/virtualenv/bin/activate
 
-    pip install requests
-    pip install validators
-    pip install Django==2.0.13
+Install dependencies:
 
-### Download
+    pip install requests validators Django==2.0.13
+
+### Install
 
 Check out the source code from github like this:
 
+    cd $INSTALL_DIR
     git clone https://github.com/mn1/disease_trends
+
+Change to the new directory:
+
+    cd disease_trends
 
 ### Set up your environment
 
@@ -33,19 +50,19 @@ Activate the virtual environment if you haven't already done so:
 
 Set the PYTHONPATH:
 
-    export PYTHONPATH=$INSTALL_DIR/modules
+    export PYTHONPATH=$INSTALL_DIR/disease_trends/modules
 
 ### Test the application
 
-    python -m unittest discover $INSTALL_DIR/test/
+    python -m unittest discover $INSTALL_DIR/disease_trends/test/
 
-## Run
+### Run
 
 Start the server by running:
 
     python modules/disease_trends/manage.py runserver 0:8000
 
-Navigate your browser to http://127.0.0.1:8000 to see the web application.
+Navigate your browser to http://127.0.0.1:8000/get_input/ to see the web application.
 
 ## Terms and conditions
 
