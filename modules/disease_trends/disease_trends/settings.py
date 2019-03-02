@@ -25,7 +25,7 @@ SECRET_KEY = 'co886hxv$=ppw^75*g-vs(s!x_0_g&piz5-rc_j*frgt$=iy^$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '*' ]
 
 
 # Application definition
