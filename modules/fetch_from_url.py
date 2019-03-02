@@ -1,9 +1,29 @@
 #!/usr/bin/python3
 
-# ./modules/fetch_from_url.py > test.xml
-
 import requests as req
 
-url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=diabetes+AND+2011&datetype=pdat&retmax=100000"
-resp = req.get(url)
-print(resp.text)
+from construct_urls import build_esearch_url
+from parse_xml      import parse_xml_string
+
+def fetch_term_count_for_year_range(term, from_year, to_year):
+    
+    term_count_by_year = {}
+    
+    for year in range(from_year, to_year + 1):
+        
+        count = fetch_term_count_for_year(term, year)
+        term_count_by_year[year] = count
+    
+    return term_count_by_year
+
+def fetch_term_count_for_year(term, year):
+    
+    url = build_esearch_url(
+        term = term,
+        year = year
+    )
+    response = req.get(url)
+    count_text = parse_xml_string(response.text)
+    count = int(count_text)
+    return count
+
