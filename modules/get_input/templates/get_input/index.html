@@ -2,7 +2,57 @@
 <body>
     <h1>Disease trends</h1>
 
-<p>the message is: {{ message }}</p>
+<p>The message is: {{ message }}</p>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'get_input:response'  %}" method="post">
+
+{% csrf_token %}
+
+<p>
+<label for="name">Disease:</label>
+<input type="text" id="name" name="name" required size="20">
+
+</p>
+<p>
+
+<label for="start_year">Choose the start year:</label>
+<select id="start_year" name="start_year">
+    <option value="2000">2000</option>
+    <option value="2001">2001</option>
+    <option value="2002">2002</option>
+    <option value="2003">2003</option>
+    <option value="2004">2004</option>
+    <option selected="selected" value="2005">2005</option>
+    <option value="2006">2006</option>
+    <option value="2007">2007</option>
+    <option value="2008">2008</option>
+    <option value="2009">2009</option>
+    <option value="2010">2010</option>
+</select>
+
+</p>
+<p>
+
+<label for="end_year">Choose the end year:</label>
+<select id="end_year" name="end_year">
+    <option value="2000">2000</option>
+    <option value="2001">2001</option>
+    <option value="2002">2002</option>
+    <option value="2003">2003</option>
+    <option value="2004">2004</option>
+    <option value="2005">2005</option>
+    <option value="2006">2006</option>
+    <option value="2007">2007</option>
+    <option value="2008">2008</option>
+    <option value="2009">2009</option>
+    <option selected="selected" value="2010">2010</option>
+</select>
+
+</p>
+
+<input type="submit" value="Submit" />
 
 </body>
 </html>
