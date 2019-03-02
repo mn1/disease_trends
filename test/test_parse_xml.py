@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from parse_xml import parse_xml
+from parse_xml import parse_xml, parse_xml_string
 import unittest
 
 import os
@@ -29,6 +29,26 @@ class TestStringMethods(unittest.TestCase):
         
         count = parse_xml(data_files_dir + '/' + 'test_2015.xml')
         self.assertEqual(count, "217904")
+
+    def test_xml_parse_from_string_ok(self):
+        
+        with open(data_files_dir + '/' + 'test_2011.xml') as f:
+            xml_as_string = f.read()
+        
+        count = parse_xml_string(xml_as_string)
+        self.assertEqual(count, "176207")
+
+        with open(data_files_dir + '/' + 'test_2012.xml') as f:
+            xml_as_string = f.read()
+        
+        count = parse_xml_string(xml_as_string)
+        self.assertEqual(count, "188997")
+
+        with open(data_files_dir + '/' + 'test_2013.xml') as f:
+            xml_as_string = f.read()
+        
+        count = parse_xml_string(xml_as_string)
+        self.assertEqual(count, "196630")
 
 if __name__ == '__main__':
     unittest.main()
