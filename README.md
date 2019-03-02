@@ -10,11 +10,10 @@ Choose the directory to which this will be installed:
 
 ## Python 3.4
 
-This may work with other Python3 version, but I have only tested it with Python 3.4
+This may work with other Python3.x versions, but I have only tested it with Python 3.4
 
     sudo yum update
     sudo yum install python34
-    sudo yum install git
 
 ## Libraries
 
@@ -36,6 +35,8 @@ Install dependencies:
 Check out the source code from github like this:
 
     cd $INSTALL_DIR
+    # If you don't have git installed:
+    sudo yum install git
     git clone https://github.com/mn1/disease_trends
 
 Change to the new directory:
