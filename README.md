@@ -2,7 +2,7 @@
 
 # Install
 
- INSTALL_DIR=/home/mnuhn/linguamatics
+    INSTALL_DIR=/home/mnuhn/linguamatics
 
 ## Dependencies
 
