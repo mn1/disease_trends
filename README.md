@@ -33,9 +33,9 @@ Activate the virtual environment if you haven't already done so:
 
 Set the PYTHONPATH:
 
-    export PYTHONPATH=$INSTALL_DIR:./modules
+    export PYTHONPATH=$INSTALL_DIR/modules
 
-### Test the installation
+### Test the application
 
     python -m unittest discover $INSTALL_DIR/test/
 
@@ -43,7 +43,7 @@ Set the PYTHONPATH:
 
 Start the server by running:
 
-    python mysite/manage.py runserver 0:8000
+    python modules/disease_trends/manage.py runserver 0:8000
 
 Navigate your browser to http://127.0.0.1:8000 to see the web application.
 
