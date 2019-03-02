@@ -3,16 +3,60 @@
     <h1>The response</h1>
 
 <p>
-The selected disease was: {{ name }}
+The selected disease was: <em>{{ name }}</em>
 </p>
 
 <p>
-From: {{ start_year }}
+The search will be from the year <em>{{ start_year }}</em> until <em>{{ end_year }}</em>.
 </p>
 
 <p>
-Until: {{ end_year }}
+    The urls that will be queried are:
 </p>
+
+<ul>
+{% for generated_url in urls %}
+    <li>{{ generated_url }}</li>
+{% endfor %}
+</ul>
+
+
+<script src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/Chart.bundle.js"></script>
+<canvas id="myChart" width="80%"></canvas>
+
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [
+            "2005",
+            "2006",
+            "2007",
+        ],
+        datasets: [{
+            label: '# of papers',
+            data: [12, 19, 3,],
+            backgroundColor: 
+                'rgba(54, 162, 235, 0.2)',
+            
+            borderColor: 
+                'rgba(54, 162, 235, 1)',
+            
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
 
 </body>
 </html>
