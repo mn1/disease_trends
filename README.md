@@ -45,6 +45,11 @@ Start the server by running:
 
     python mysite/manage.py runserver 0:8000
 
-Navigate your browser to http://127.0.0.1:8000 to see the web application..
+Navigate your browser to http://127.0.0.1:8000 to see the web application.
+
+## Terms and conditions
+
+This makes Django start a webserver. It is not recommended for production environments. When something goes wrong, you might see embarassing debug messages revealing the internals of the web application.
+
 
 
