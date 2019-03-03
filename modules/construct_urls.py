@@ -5,7 +5,7 @@ def build_esearch_url_year_range(
         term             = "diabetes",
         from_year        = 2011,
         to_year          = 2015,
-        retmax           = 100000
+        retmax           = 10
     ):
     urls = [ 
         build_esearch_url(
@@ -22,7 +22,7 @@ def build_esearch_url(
         esearch_base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
         term             = "diabetes",
         year             = 2011,
-        retmax           = 100000
+        retmax           = 10
     ):
     url = "%s?db=pubmed&term=%s+AND+%s&datetype=pdat&retmax=%s" % ( esearch_base_url, term, year, retmax)
     return url
