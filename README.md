@@ -2,6 +2,12 @@
 
 ## Install
 
+These installation instructions were tested on the
+
+    Amazon Linux AMI 2018.03.0 (HVM), SSD Volume Type
+
+image from the AWS cloud.
+
 Choose the directory to which this will be installed:
 
     INSTALL_DIR=~/disease_trends_webapp
@@ -20,7 +26,7 @@ This may work with other Python3.x versions, but I have only tested it with Pyth
 Libraries are installed in a virtual environment
 
     pip install virtualenv
-    virtualenv -p python3 $INSTALL_DIR/virtualenv
+    virtualenv -p python34 $INSTALL_DIR/virtualenv
 
 Activate it:
 
@@ -38,10 +44,6 @@ Check out the source code from github like this:
     # If you don't have git installed:
     sudo yum install git
     git clone https://github.com/mn1/disease_trends
-
-Change to the new directory:
-
-    cd disease_trends
 
 ### Set up your environment
 
@@ -62,13 +64,7 @@ Set the PYTHONPATH:
 
 Start the server by running:
 
-    python modules/disease_trends/manage.py runserver 0:8000
+    python disease_trends/modules/disease_trends/manage.py runserver 0:8000
 
-Navigate your browser to http://127.0.0.1:8000/get_input/ to see the web application.
-
-## Terms and conditions
-
-This makes Django start a webserver. It is not recommended for production environments. When something goes wrong, you might see embarassing debug messages revealing the internals of the web application.
-
-
+Navigate your browser to http://127.0.0.1:8000/ to see the web application.
 
