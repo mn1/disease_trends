@@ -9,23 +9,27 @@ from fetch_from_url \
         fetch_term_count_for_year, \
         fetch_term_count_for_year_range
 
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 class TestFetchMethods(unittest.TestCase):
 
     def test_fetch_term_count_for_year(self):
         
         count = fetch_term_count_for_year("cancer", 2010)
-        self.assertEqual(count, 167665)
+        self.assertTrue(RepresentsInt(count))
 
     def test_fetch_term_count_for_year(self):
         
         counts = fetch_term_count_for_year_range("cancer", 2010, 2012)
         
-        self.assertEqual(counts[2010], 167665)
-        self.assertEqual(counts[2011], 176218)
-        self.assertEqual(counts[2012], 189013)
-        # print(counts);
-        #
-        # counts = {2010: 167665, 2011: 176218, 2012: 189013}
+        self.assertTrue( RepresentsInt(counts[2010]) )
+        self.assertTrue( RepresentsInt(counts[2011]) )
+        self.assertTrue( RepresentsInt(counts[2012]) )
 
 if __name__ == '__main__':
     unittest.main()
