@@ -1,76 +1,128 @@
 <html>
+<head>
+
+    <link rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/datatables.css"/>
+
+    <script src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/Chart.bundle.js"></script>
+    <script src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/utils.js"></script>
+    <script type="text/javascript" language="javascript" src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://www.ebi.ac.uk/~mnuhn/regulatory_build_stats/js/datatables.js"></script>
+
+</head>
+
 <body>
     <h1>Disease trends</h1>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'get_input:response'  %}" method="post">
+<form action="{% url 'get_input:get_input'  %}" method="post">
 
 {% csrf_token %}
 
-<p>
-<label for="name">Disease:</label>
-<input type="text" id="name" name="name" required size="20">
-
-</p>
-<p>
-
-<label for="start_year">Choose the start year:</label>
-<select id="start_year" name="start_year">
-    <option value="2000">2000</option>
-    <option value="2001">2001</option>
-    <option value="2002">2002</option>
-    <option value="2003">2003</option>
-    <option value="2004">2004</option>
-    <option selected="selected" value="2005">2005</option>
-    <option value="2006">2006</option>
-    <option value="2007">2007</option>
-    <option value="2008">2008</option>
-    <option value="2009">2009</option>
-    <option value="2010">2010</option>
-    <option value="2011">2011</option>
-    <option value="2012">2012</option>
-    <option value="2013">2013</option>
-    <option value="2014">2014</option>
-    <option value="2015">2015</option>
-    <option value="2016">2016</option>
-    <option value="2017">2017</option>
-    <option value="2018">2018</option>
-    <option value="2019">2019</option>
-</select>
-
-</p>
-<p>
-
-<label for="end_year">Choose the end year:</label>
-<select id="end_year" name="end_year">
-    <option value="2000">2000</option>
-    <option value="2001">2001</option>
-    <option value="2002">2002</option>
-    <option value="2003">2003</option>
-    <option value="2004">2004</option>
-    <option value="2005">2005</option>
-    <option value="2006">2006</option>
-    <option value="2007">2007</option>
-    <option value="2008">2008</option>
-    <option value="2009">2009</option>
-    <option selected="selected" value="2010">2010</option>
-    <option value="2010">2010</option>
-    <option value="2011">2011</option>
-    <option value="2012">2012</option>
-    <option value="2013">2013</option>
-    <option value="2014">2014</option>
-    <option value="2015">2015</option>
-    <option value="2016">2016</option>
-    <option value="2017">2017</option>
-    <option value="2018">2018</option>
-    <option value="2019">2019</option>
-
-</select>
-
-</p>
+<table>
+{{ form.as_table }}
+</table>
 
 <input type="submit" value="Submit" />
+
+{% if draw_chart %}
+
+<h1>Disease trend for <em>{{ name }}</em></h1>
+
+<p>
+    From the year <em>{{ start_year }}</em> until <em>{{ end_year }}</em> the number of publications mentioning it were:
+</p>
+
+
+<div style="width: 80%;">
+<canvas id="myChart"></canvas>
+</div>
+
+<h3>Summary</h3>
+
+<script type="text/javascript" class="init">
+$(document).ready(function() {
+    $('#overview_table').DataTable();
+} );
+</script>
+
+<table id="overview_table">
+<thead>
+    <tr>
+        <th>Year</th>
+        <th>Number of papers</th>
+    </tr>
+</thead>
+
+<tbody>
+
+{% for year in years_sorted %}
+
+<tr>
+    <td>{{ year }}</td>
+    <td align="right">{{ counts|get_item:year }}</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+</table>
+
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [
+            {% for year in years_sorted %}
+            "{{ year }}",
+            {% endfor %}
+        ],
+        datasets: [{
+            label: '# of papers',
+            data: [
+                {% for year in years_sorted %}
+                "{{ counts|get_item:year }}",
+                {% endfor %}
+            ],
+            backgroundColor: 
+                'rgba(54, 162, 235, 0.2)',
+            
+            borderColor: 
+                'rgba(54, 162, 235, 1)',
+            
+            borderWidth: 1
+        }]
+    },
+    options: {
+    
+        responsive: true,
+        legend: {
+            display: true,
+            position: 'bottom',
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    min: 0
+                }
+            }]
+        },
+        title: {
+            display: false,
+            text: 'Total numbers by feature type'
+        },
+    
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+{% endif %}
 
 </body>
 </html>

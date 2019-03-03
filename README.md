@@ -56,6 +56,7 @@ Set the PYTHONPATH:
 ### Test the application
 
     python -m unittest discover $INSTALL_DIR/disease_trends/test/
+    python $INSTALL_DIR/disease_trends/modules/disease_trends/manage.py test get_input
 
 ### Run
 
